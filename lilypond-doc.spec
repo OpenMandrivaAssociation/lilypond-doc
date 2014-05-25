@@ -46,5 +46,4 @@ mkdir -p $RPM_BUILD_ROOT
 
 
 %files
-%doc license share
 %doc %{name}-documentation-%{version}/*

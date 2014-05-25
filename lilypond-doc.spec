@@ -12,7 +12,9 @@ License:        GPLv3
 URL:            http://www.lilypond.org
 # I have low bandwidth in upload , the tarball is 250 mega 
 # i'll just download it in prep , who can do better , please be my guest.Sflo
-#Source0:        http://www.lilypond.org/download/binaries/documentation/lilypond-%{version}-1.documentation.tar.bz2
+Source0:        http://www.lilypond.org/download/binaries/documentation/lilypond-%{version}-1.documentation.tar.bz2
+NoSource:       0
+
 BuildArch:      noarch
 
 

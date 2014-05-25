@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+mkdir -p lilypond-documentation-2.18.2
+[[ -d lilypond-documentation-2.18.2 ]] || exit 1
+pushd lilypond-documentation-2.18.2 || exit 1
+wget --force-clobber --timeout=30 --tries=3 "http://download.linuxaudio.org/lilypond/binaries/documentation/lilypond-2.18.2-1.documentation.tar.bz2"
+[[ -f lilypond-2.18.2-1.documentation.tar.bz2 ]] || { echo "Download failed"; rm -r lilypond-documentation-2.18.2; exit 1; }
+bunzip2 -dcq lilypond-2.18.2-1.documentation.tar.bz2 | tar -xf -
+find . -size 0 -delete
+find . -type f -exec chmod 644 {} \;
+rm -fr lilypond-2.18.2-1.documentation.tar.bz2
+popd

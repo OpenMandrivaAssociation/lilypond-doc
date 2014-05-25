@@ -3,15 +3,16 @@
 %define _nonzero_exit_pkgcheck_terminate_build 0
 
 Name:           lilypond-doc
-Version:        2.17.97
-Release:        1%{?dist}
+Version:        2.18.2
+Release:        1
 Summary:        HTML documentation for LilyPond
-
+Group:		Publishing
 
 License:        GPLv3
 URL:            http://www.lilypond.org
-Source0:        http://www.lilypond.org/download/binaries/documentation/lilypond-%{version}-1.documentation.tar.bz2
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+# I have low bandwidth in upload , the tarball is 250 mega 
+# i'll just download it in prep , who can do better , please be my guest.Sflo
+#Source0:        http://www.lilypond.org/download/binaries/documentation/lilypond-%{version}-1.documentation.tar.bz2
 BuildArch:      noarch
 
 
@@ -24,7 +25,12 @@ This package contains the HTML documentation for LilyPond.
 
 
 %prep
-%setup -q -c
+mkdir -p %{name}-documentation-%{version}
+pushd %{name}-documentation-%{version}
+wget http://download.linuxaudio.org/lilypond/binaries/documentation/%{name}-%{version}-1.documentation.tar.bz2
+bunzip2 -dcq %{name}-%{version}-1.documentation.tar.bz2 | tar -xf -
+find . -type f -exec chmod 644 {} \;
+popd
 
 
 %build
@@ -35,14 +41,10 @@ rm -f input/mutopia/W.A.Mozart/mozart-hrn-3.png
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 
 %files
-%defattr(-,root,root)
 %doc license share
+%doc %{name}-documentation-%{version}/*

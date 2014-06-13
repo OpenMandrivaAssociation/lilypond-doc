@@ -5,7 +5,7 @@
 
 Name:           lilypond-doc
 Version:        2.18.2
-Release:        1
+Release:        2
 Summary:        HTML documentation for LilyPond
 Group:		Publishing
 

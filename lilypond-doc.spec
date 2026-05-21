@@ -1,47 +1,49 @@
-%define _build_pkgcheck_set /bin/true
-%define _build_pkgcheck_srpm /bin/true
-%define _nonzero_exit_pkgcheck_terminate_build 0
-%define oname lilypond
+%global		_build_pkgcheck_set /bin/true
+%global		_build_pkgcheck_srpm /bin/true
+%global		_nonzero_exit_pkgcheck_terminate_build 0
 
-Name:           lilypond-doc
-Version:        2.18.2
-Release:        3
-Summary:        HTML documentation for LilyPond
+%define		oname lilypond
+
+Summary:	HTML documentation for LilyPond
+Name:	lilypond-doc
+Version:		2.26.0
+Release:		1
+License:		GPLv3+
 Group:		Publishing
-
-License:        GPLv3
-URL:            https://www.lilypond.org
-# I have low bandwidth in upload , the tarball is 250 mega 
-# i'll just download it in prep , who can do better , please be my guest.Sflo
-#Source0:        http://www.lilypond.org/download/binaries/documentation/lilypond-%{version}-1.documentation.tar.bz2
-Source0:       get-doc
-BuildRequires:	wget
-BuildRequires:	bzip2
+Url:		https://www.lilypond.org
+Source0:	https://gitlab.com/lilypond/lilypond/-/releases/v%{version}/downloads/%{oname}-%{version}-documentation.tar.xz
+#BuildRequires:		wget
+#BuildRequires:		bzip2
+BuildRequires:		xz
 BuildArch:      noarch
 Provides:	%{oname}-manual = %{version}
 
 %description
-LilyPond is an automated music engraving system. It formats music
-beautifully and automatically, and has a friendly syntax for its input
-files.
-
+LilyPond is an automated music engraving system. It formats music beautifully
+and automatically, and has a friendly syntax for its input files.
 This package contains the HTML documentation for LilyPond.
 
+%files
+%{_docdir}/%{oname}/*
+
+#-----------------------------------------------------------------------------
 
 %prep
-cp -R %{SOURCE0} . && chmod +x get-doc && ./get-doc
+#cp -R %%{SOURCE0} . && chmod +x get-doc && ./get-doc
+%autosetup -p1 -n share
+
 
 %build
-# nothing to build
+# Nothing to do: only docs
 
 
 %install
-
-
-
-%files
-%doc %{oname}-documentation-%{version}/*
-
+# Install only manuals... not interested in regression tests docs
+mkdir -p %{buildroot}%{_docdir}/%{oname}
+pwd
+cp -a doc/%{oname}/html/Documentation/* %{buildroot}%{_docdir}/%{oname}/
+cp doc/%{oname}/html/index.html %{buildroot}%{_docdir}/%{oname}/
+cp doc/%{oname}/html/README.md %{buildroot}%{_docdir}/%{oname}/
 
 
 
